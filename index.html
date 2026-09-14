@@ -1,1 +1,2577 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <!-- ===================== SEO ===================== -->
+  <title>The Beast Tattoo Studio | Premium Tattoo Studio</title>
+  <meta
+    name="description"
+    content="The Beast — premium tattoo studio. Custom tattoo, black & grey, realism i fine line rad, u prostoru posvećenom vrhunskoj higijeni, preciznosti i individualnom pristupu svakom klijentu."
+  />
+  <link rel="canonical" href="https://www.thebeasttattoo.rs/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="The Beast Tattoo Studio | Premium Tattoo Studio" />
+  <meta
+    property="og:description"
+    content="Where art meets skin. Premium tattoo studio — custom dizajn, realism, black & grey i fine line rad."
+  />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1761276297686-f507ca9fe8b6?auto=format&fit=crop&w=1200&q=80" />
+  <meta property="og:url" content="https://www.thebeasttattoo.rs/" />
+  <meta property="og:locale" content="sr_RS" />
+
+  <link rel="icon" type="image/svg+xml" href="/images/favicon.svg" />
+  <style>
+/* ==========================================================================
+   THE BEAST — TATTOO STUDIO
+   style.css
+
+   Sadržaj:
+   1. Reset & osnovne postavke
+   2. Design tokeni (boje, tipografija, razmaci)
+   3. Tipografija
+   4. Layout helpers (container, section)
+   5. Navbar
+   6. Hero
+   7. Dugmad
+   8. Usluge
+   9. O salonu
+   10. Galerija + Lightbox
+   11. Kontakt forma
+   12. Mapa
+   13. Footer
+   14. Scroll reveal animacije
+   15. Responsive
+   16. Accessibility / reduced motion
+   ========================================================================== */
+
+/* ==========================================================================
+   1. RESET
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  overflow-x: hidden;
+  background: var(--bg);
+  color: var(--white);
+  font-family: var(--font-body);
+  font-weight: 400;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+ul {
+  list-style: none;
+}
+
+input,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+/* Body scroll lock when mobile menu / lightbox open */
+body.menu-open {
+  overflow: hidden;
+}
+
+/* ==========================================================================
+   2. DESIGN TOKENI
+   ========================================================================== */
+
+:root {
+  /* Boje — crna / bela / sive nijanse, minimalna upotreba ostalih boja */
+  --black: #050505;
+  --bg: #0a0a0a;
+  --surface: #121212;
+  --surface-hover: #171717;
+  --border: rgba(255, 255, 255, 0.09);
+  --border-strong: rgba(255, 255, 255, 0.22);
+  --white: #f3f2ee;
+  --grey-200: #d8d6d0;
+  --grey-400: #a3a19b;
+  --grey-600: #6f6e6a;
+  --grey-800: #333331;
+
+  --glow: rgba(255, 255, 255, 0.06);
+
+  /* Tipografija */
+  --font-display: "Unbounded", "Helvetica Neue", sans-serif;
+  --font-body: "Inter", "Helvetica Neue", sans-serif;
+
+  /* Razmaci */
+  --container-width: 1240px;
+  --section-padding: clamp(3rem, 6vw, 5.5rem);
+  --gutter: clamp(1.25rem, 5vw, 3rem);
+
+  /* Tajming animacija */
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 220ms;
+  --duration-base: 480ms;
+  --duration-slow: 900ms;
+
+  --header-height: 84px;
+}
+
+/* ==========================================================================
+   3. TIPOGRAFIJA
+   ========================================================================== */
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+}
+
+h2 {
+  font-size: clamp(2.25rem, 4.5vw, 3.5rem);
+  font-weight: 500;
+}
+
+h3 {
+  font-size: 1.35rem;
+  font-weight: 500;
+}
+
+p {
+  color: var(--grey-400);
+  max-width: 62ch;
+}
+
+/* ==========================================================================
+   4. LAYOUT HELPERS
+   ========================================================================== */
+
+.container {
+  width: 100%;
+  max-width: var(--container-width);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section {
+  padding-block: var(--section-padding);
+}
+
+.section-heading {
+  max-width: 640px;
+  margin-bottom: clamp(2rem, 4vw, 3.25rem);
+}
+
+.section-heading h2 {
+  margin-bottom: 1.25rem;
+}
+
+.section-sub {
+  font-size: 1.05rem;
+}
+
+/* ==========================================================================
+   5. NAVBAR
+   ========================================================================== */
+
+.site-header {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 100;
+  height: var(--header-height);
+  display: flex;
+  align-items: center;
+  transition: background-color var(--duration-base) var(--ease),
+    backdrop-filter var(--duration-base) var(--ease),
+    border-color var(--duration-base) var(--ease);
+  border-bottom: 1px solid transparent;
+}
+
+.site-header.is-scrolled {
+  background-color: rgba(8, 8, 8, 0.72);
+  backdrop-filter: blur(16px) saturate(120%);
+  -webkit-backdrop-filter: blur(16px) saturate(120%);
+  border-bottom-color: var(--border);
+}
+
+.header-inner {
+  width: 100%;
+  max-width: var(--container-width);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--white);
+}
+
+.brand-logo {
+  width: 1em;
+  height: 1em;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.nav-desktop ul {
+  display: flex;
+  gap: clamp(1.5rem, 3vw, 2.75rem);
+}
+
+.nav-link {
+  position: relative;
+  font-size: 0.95rem;
+  color: var(--grey-200);
+  padding-block: 0.4rem;
+  transition: color var(--duration-fast) var(--ease);
+}
+
+.nav-link span {
+  position: relative;
+}
+
+.nav-link span::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 100%;
+  height: 1px;
+  background: var(--white);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform var(--duration-base) var(--ease);
+}
+
+.nav-link:hover,
+.nav-link.is-active {
+  color: var(--white);
+}
+
+.nav-link:hover span::after,
+.nav-link.is-active span::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* Wrapper koji drži lang-switch i hamburger jedno pored drugog na mobilnom */
+.nav-actions {
+  display: flex;
+  align-items: center;
+}
+
+/* Language switcher */
+.lang-switch {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-right: clamp(0.75rem, 2vw, 1.5rem);
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  padding: 0.2rem;
+}
+
+.lang-btn {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--grey-400);
+  padding: 0.3rem 0.65rem;
+  border-radius: 999px;
+  transition: background var(--duration-fast) var(--ease), color var(--duration-fast) var(--ease);
+}
+
+.lang-btn.is-active {
+  background: var(--white);
+  color: var(--black);
+}
+
+.mobile-menu .lang-switch {
+  margin-right: 0;
+  margin-top: 0.5rem;
+}
+
+/* Hamburger */
+.hamburger {
+  display: none;
+  position: relative;
+  width: 32px;
+  height: 22px;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index: 110;
+}
+
+.hamburger-line {
+  display: block;
+  width: 100%;
+  height: 1.5px;
+  background: var(--white);
+  transition: transform var(--duration-base) var(--ease), opacity var(--duration-fast) var(--ease);
+}
+
+.hamburger.is-open .hamburger-line:nth-child(1) {
+  transform: translateY(9.5px) rotate(45deg);
+}
+.hamburger.is-open .hamburger-line:nth-child(2) {
+  opacity: 0;
+}
+.hamburger.is-open .hamburger-line:nth-child(3) {
+  transform: translateY(-9.5px) rotate(-45deg);
+}
+
+/* Mobile menu */
+.mobile-menu {
+  position: fixed;
+  inset: 0;
+  z-index: 105;
+  background: rgba(6, 6, 6, 0.98);
+  backdrop-filter: blur(20px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-12px);
+  transition: opacity var(--duration-base) var(--ease),
+    transform var(--duration-base) var(--ease),
+    visibility 0s linear var(--duration-base);
+}
+
+.mobile-menu.is-open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition: opacity var(--duration-base) var(--ease),
+    transform var(--duration-base) var(--ease),
+    visibility 0s linear 0s;
+}
+
+.mobile-menu ul {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.75rem;
+}
+
+.mobile-menu .nav-link {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 400;
+}
+
+.mobile-menu-cta {
+  margin-top: 0.5rem;
+  padding: 0.9rem 2.25rem;
+  border: 1px solid var(--border-strong);
+  border-radius: 2px;
+  font-size: 0.9rem;
+  letter-spacing: 0.03em;
+  transition: background var(--duration-fast) var(--ease), border-color var(--duration-fast) var(--ease);
+}
+
+.mobile-menu-cta:hover {
+  background: var(--white);
+  color: var(--black);
+}
+
+/* ==========================================================================
+   6. HERO
+   ========================================================================== */
+
+.hero {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.hero-media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.08);
+  will-change: transform;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(5, 5, 5, 0.55) 0%, rgba(5, 5, 5, 0.35) 35%, rgba(5, 5, 5, 0.85) 100%),
+    linear-gradient(90deg, rgba(5, 5, 5, 0.75) 0%, rgba(5, 5, 5, 0.25) 45%, rgba(5, 5, 5, 0.75) 100%);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding-inline: var(--gutter);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hero-eyebrow {
+  font-size: 0.85rem;
+  color: var(--grey-400);
+  letter-spacing: 0.06em;
+  margin-bottom: 1.5rem;
+}
+
+.hero-title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.hero-title-line {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(3.2rem, 12vw, 8rem);
+  line-height: 0.95;
+  letter-spacing: -0.01em;
+  color: var(--white);
+  text-shadow: 0 12px 60px rgba(0, 0, 0, 0.6);
+}
+
+.hero-title-sub {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.1rem, 2.4vw, 1.6rem);
+  letter-spacing: 0.35em;
+  color: var(--grey-200);
+  padding-left: 0.35em; /* kompenzacija za letter-spacing */
+}
+
+.hero-tagline {
+  margin-top: 1.75rem;
+  font-size: clamp(1.05rem, 1.6vw, 1.3rem);
+  color: var(--grey-200);
+  font-weight: 300;
+}
+
+.hero-actions {
+  margin-top: 2.75rem;
+  display: flex;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Hero load-in animacija */
+.reveal-hero {
+  opacity: 0;
+  transform: translateY(22px);
+  animation: heroReveal var(--duration-slow) var(--ease) forwards;
+  animation-delay: calc(var(--d) * 140ms + 200ms);
+}
+
+@keyframes heroReveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.scroll-hint {
+  position: absolute;
+  bottom: clamp(1.5rem, 4vh, 2.75rem);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 24px;
+  height: 40px;
+  border: 1px solid var(--border-strong);
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  padding-top: 8px;
+  transition: opacity var(--duration-base) var(--ease);
+  z-index: 1;
+}
+
+.scroll-hint-line {
+  width: 2px;
+  height: 8px;
+  background: var(--white);
+  border-radius: 2px;
+  animation: scrollHint 1.8s ease-in-out infinite;
+}
+
+@keyframes scrollHint {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  60% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateY(14px);
+    opacity: 0;
+  }
+}
+
+/* ==========================================================================
+   7. DUGMAD
+   ========================================================================== */
+
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 2.25rem;
+  font-size: 0.92rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  border-radius: 2px;
+  overflow: hidden;
+  isolation: isolate;
+  transition: color var(--duration-base) var(--ease), border-color var(--duration-base) var(--ease);
+}
+
+.btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--duration-base) var(--ease);
+}
+
+.btn-primary {
+  background: var(--white);
+  color: var(--black);
+  border: 1px solid var(--white);
+}
+
+.btn-primary::before {
+  background: var(--grey-200);
+}
+
+.btn-primary:hover::before {
+  transform: scaleX(1);
+}
+
+.btn-ghost {
+  border: 1px solid var(--border-strong);
+  color: var(--white);
+  background: transparent;
+}
+
+.btn-ghost::before {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.btn-ghost:hover::before {
+  transform: scaleX(1);
+}
+
+.btn-full {
+  width: 100%;
+}
+
+/* ==========================================================================
+   8. USLUGE
+   ========================================================================== */
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+
+.service-card {
+  position: relative;
+  background: var(--bg);
+  padding: 2.75rem 2rem;
+  transition: background var(--duration-base) var(--ease);
+}
+
+.service-card:nth-child(even) {
+  padding-top: 4.25rem;
+  padding-bottom: 1.25rem;
+}
+
+.service-card:hover {
+  background: var(--surface);
+}
+
+.service-index {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  color: var(--grey-600);
+  margin-bottom: 1.75rem;
+  transition: color var(--duration-base) var(--ease);
+}
+
+.service-card:hover .service-index {
+  color: var(--grey-400);
+}
+
+.service-title {
+  margin-bottom: 0.85rem;
+}
+
+.service-description {
+  font-size: 0.95rem;
+  max-width: 34ch;
+}
+
+.service-line {
+  position: absolute;
+  left: 2rem;
+  right: 2rem;
+  bottom: 1.75rem;
+  height: 1px;
+  background: var(--border-strong);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--duration-slow) var(--ease);
+}
+
+.service-card:hover .service-line {
+  transform: scaleX(1);
+}
+
+/* ==========================================================================
+   9. O SALONU
+   ========================================================================== */
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: clamp(2.5rem, 6vw, 6rem);
+  align-items: center;
+}
+
+.about-media {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  margin-left: calc(var(--gutter) * -1);
+}
+
+.about-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(15%) contrast(1.05);
+}
+
+/* Holder za sliku — prikazuje se dok SITE_CONFIG.images.about nije podešen */
+.about-media.is-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface);
+  border: 1px dashed var(--border-strong);
+}
+
+.about-media.is-placeholder img {
+  display: none;
+}
+
+.about-media-placeholder-label {
+  display: none;
+  text-align: center;
+  padding: 2rem;
+  color: var(--grey-600);
+  font-size: 0.85rem;
+  letter-spacing: 0.02em;
+}
+
+.about-media.is-placeholder .about-media-placeholder-label {
+  display: block;
+}
+
+.about-content h2 {
+  margin-bottom: 1.75rem;
+}
+
+.about-content p {
+  margin-bottom: 1.25rem;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  gap: clamp(1.5rem, 4vw, 3rem);
+  margin-top: 3rem;
+  padding-top: 2.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.stat-number {
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem, 3vw, 2.6rem);
+  font-weight: 600;
+  color: var(--white);
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  color: var(--grey-400);
+}
+
+/* ==========================================================================
+   10. GALERIJA + LIGHTBOX
+   ========================================================================== */
+
+.gallery-grid {
+  columns: 4 260px;
+  column-gap: 1rem;
+}
+
+.gallery-item {
+  position: relative;
+  display: block;
+  width: 100%;
+  margin-bottom: 1rem;
+  overflow: hidden;
+  break-inside: avoid;
+  cursor: pointer;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: auto;
+  min-height: 220px;
+  background: var(--surface);
+  object-fit: cover;
+  transition: transform var(--duration-slow) var(--ease), filter var(--duration-slow) var(--ease);
+  filter: grayscale(10%);
+}
+
+.gallery-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(5, 5, 5, 0) 40%, rgba(5, 5, 5, 0.75) 100%);
+  opacity: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 1rem;
+  transition: opacity var(--duration-base) var(--ease);
+}
+
+.gallery-plus {
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.gallery-plus::before,
+.gallery-plus::after {
+  content: "";
+  position: absolute;
+  background: var(--white);
+  top: 50%;
+  left: 50%;
+}
+
+.gallery-plus::before {
+  width: 12px;
+  height: 1px;
+  transform: translate(-50%, -50%);
+}
+
+.gallery-plus::after {
+  width: 1px;
+  height: 12px;
+  transform: translate(-50%, -50%);
+}
+
+.gallery-item:hover img,
+.gallery-item:focus-visible img {
+  transform: scale(1.06);
+  filter: grayscale(0%);
+}
+
+.gallery-item:hover .gallery-overlay,
+.gallery-item:focus-visible .gallery-overlay {
+  opacity: 1;
+}
+
+/* Lightbox */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity var(--duration-base) var(--ease), visibility 0s linear var(--duration-base);
+}
+
+.lightbox.is-open {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity var(--duration-base) var(--ease), visibility 0s linear 0s;
+}
+
+.lightbox-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(4, 4, 4, 0.94);
+  backdrop-filter: blur(6px);
+}
+
+.lightbox-content {
+  position: relative;
+  z-index: 1;
+  width: min(90vw, 1100px);
+  max-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.lightbox-image {
+  max-width: 100%;
+  max-height: 72vh;
+  width: auto;
+  object-fit: contain;
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.6);
+  transform: scale(0.97);
+  opacity: 0;
+  animation: lightboxIn var(--duration-base) var(--ease) forwards;
+}
+
+@keyframes lightboxIn {
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.lightbox-meta {
+  margin-top: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: var(--grey-400);
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.lightbox-close,
+.lightbox-prev,
+.lightbox-next {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border: 1px solid var(--border-strong);
+  border-radius: 50%;
+  color: var(--white);
+  font-size: 1.4rem;
+  transition: background var(--duration-fast) var(--ease), transform var(--duration-fast) var(--ease);
+}
+
+.lightbox-close:hover,
+.lightbox-prev:hover,
+.lightbox-next:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.lightbox-close {
+  top: -0.5rem;
+  right: -0.5rem;
+  transform: translate(50%, -50%);
+}
+
+.lightbox-prev {
+  left: -1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.lightbox-next {
+  right: -1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* ==========================================================================
+   10.5 TESTIMONIJALI
+   ========================================================================== */
+
+.testimonials-marquee {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 6%,
+    black 94%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 6%,
+    black 94%,
+    transparent
+  );
+}
+
+.testimonials-track {
+  display: flex;
+  gap: 1.25rem;
+  width: max-content;
+  padding-inline: var(--gutter);
+  animation: testimonials-scroll 32s linear infinite;
+}
+
+.testimonials-marquee:hover .testimonials-track {
+  animation-play-state: paused;
+}
+
+@keyframes testimonials-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.testimonial-card {
+  flex: 0 0 auto;
+  width: min(280px, 78vw);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.testimonial-quote-mark {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  line-height: 1;
+  color: var(--grey-800);
+}
+
+.testimonial-text {
+  color: var(--grey-200);
+  font-size: 0.92rem;
+  max-width: none;
+}
+
+.testimonial-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.testimonial-name {
+  color: var(--white);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.testimonial-stars {
+  color: var(--grey-400);
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .testimonials-track {
+    animation: none;
+  }
+}
+
+/* ==========================================================================
+   11. KONTAKT FORMA
+   ========================================================================== */
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  max-width: 640px;
+}
+
+.contact-lead {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--white);
+  margin-top: 1.5rem;
+}
+
+.contact-sub {
+  font-size: 0.9rem;
+  margin-bottom: 2.5rem;
+}
+
+.contact-details {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  margin-bottom: 2.5rem;
+  padding-bottom: 2.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.contact-details li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.contact-label {
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  color: var(--grey-600);
+}
+
+.contact-details a {
+  font-size: 1.05rem;
+  color: var(--white);
+  width: fit-content;
+  position: relative;
+}
+
+.contact-details a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 1px;
+  background: var(--white);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform var(--duration-base) var(--ease);
+}
+
+.contact-details a:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.hours-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-bottom: 2.5rem;
+}
+
+.hours-list li {
+  display: flex;
+  justify-content: space-between;
+  max-width: 320px;
+  font-size: 0.95rem;
+}
+
+.hours-day {
+  color: var(--grey-400);
+}
+
+.hours-time {
+  color: var(--white);
+}
+
+/* ==========================================================================
+   12. MAPA
+   ========================================================================== */
+
+.map-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.map-frame {
+  position: relative;
+  min-height: 480px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.map-frame iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  filter: grayscale(75%) invert(92%) contrast(90%);
+}
+
+/* ==========================================================================
+   13. FOOTER
+   ========================================================================== */
+
+.site-footer {
+  background: var(--black);
+  border-top: 1px solid var(--border);
+  padding-top: clamp(3rem, 6vw, 5rem);
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2.5rem;
+  padding-bottom: 2.5rem;
+}
+
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.footer-logo {
+  width: 2.75rem;
+  height: 2.75rem;
+  object-fit: contain;
+  margin-bottom: 0.35rem;
+}
+
+.footer-name {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+.footer-sub {
+  font-size: 0.85rem;
+  color: var(--grey-600);
+}
+
+.footer-nav ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.footer-nav a {
+  font-size: 0.92rem;
+  color: var(--grey-400);
+  transition: color var(--duration-fast) var(--ease);
+}
+
+.footer-nav a:hover {
+  color: var(--white);
+}
+
+.footer-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  font-size: 0.92rem;
+  color: var(--grey-400);
+}
+
+.footer-contact a:hover {
+  color: var(--white);
+}
+
+.footer-bottom {
+  border-top: 1px solid var(--border);
+  padding-block: 1.5rem;
+  text-align: center;
+}
+
+.footer-bottom p {
+  font-size: 0.8rem;
+  color: var(--grey-600);
+  margin: 0 auto;
+}
+
+/* ==========================================================================
+   14. SCROLL REVEAL
+   ========================================================================== */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity var(--duration-slow) var(--ease), transform var(--duration-slow) var(--ease);
+  will-change: transform, opacity;
+}
+
+.reveal.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ==========================================================================
+   15. RESPONSIVE
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .service-card:nth-child(even) {
+    padding-top: 2.75rem;
+    padding-bottom: 2.75rem;
+  }
+
+  .about-grid,
+  .contact-grid,
+  .map-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-media {
+    margin-left: 0;
+    aspect-ratio: 16 / 10;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .gallery-grid {
+    columns: 3 220px;
+  }
+}
+
+@media (max-width: 780px) {
+  .nav-desktop {
+    display: none;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .service-card:nth-child(even) {
+    padding-top: 2.75rem;
+    padding-bottom: 2.75rem;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .gallery-grid {
+    columns: 2 160px;
+  }
+
+  .lightbox-prev {
+    left: 0.5rem;
+  }
+
+  .lightbox-next {
+    right: 0.5rem;
+  }
+
+  .lightbox-close {
+    top: 0.5rem;
+    right: 0.5rem;
+    transform: none;
+  }
+
+  .lightbox-content {
+    width: 100vw;
+    padding-inline: 3.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --header-height: 72px;
+  }
+
+  .hero-title-sub {
+    letter-spacing: 0.22em;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .btn {
+    width: 100%;
+  }
+
+  .gallery-grid {
+    columns: 2 140px;
+    column-gap: 0.6rem;
+  }
+
+  .gallery-item {
+    margin-bottom: 0.6rem;
+  }
+}
+
+/* ==========================================================================
+   16. ACCESSIBILITY
+   ========================================================================== */
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--white);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .hero-bg {
+    transform: none !important;
+  }
+}
+
+  </style>
+
+  <!-- Google Fonts: Unbounded (display) + Inter (tekst) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap"
+    rel="stylesheet"
+  />
+</head>
+<body class="no-js">
+
+  <!-- ============================================================
+       NAVBAR
+  ============================================================= -->
+  <header class="site-header" id="site-header">
+    <div class="header-inner">
+      <a href="#pocetna" class="brand" data-i18n-aria-label="brandHomeAria" aria-label="The Beast Tattoo Studio — početna">
+        <img class="brand-logo" src="/images/logo.png" alt="" />
+        <span data-config="brand-name">THE BEAST</span>
+      </a>
+
+      <nav class="nav-desktop" data-i18n-aria-label="mainNavAria" aria-label="Glavna navigacija">
+        <ul data-config="nav"></ul>
+      </nav>
+
+      <div class="nav-actions">
+        <div class="lang-switch" role="group" aria-label="Izbor jezika / Language selection">
+          <button type="button" class="lang-btn" data-lang-btn="sr">SR</button>
+          <button type="button" class="lang-btn" data-lang-btn="en">EN</button>
+        </div>
+
+        <button
+          class="hamburger"
+          data-i18n-aria-label="openMenuAria"
+          aria-label="Otvori meni"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+        >
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
+      </div>
+    </div>
+
+    <nav class="mobile-menu" id="mobile-menu" data-i18n-aria-label="mobileNavAria" aria-label="Mobilna navigacija">
+      <ul data-config="nav"></ul>
+      <a class="mobile-menu-cta" data-i18n="ctaBook" href="#kontakt">Zakaži termin</a>
+      <div class="lang-switch" role="group" aria-label="Izbor jezika / Language selection">
+        <button type="button" class="lang-btn" data-lang-btn="sr">SR</button>
+        <button type="button" class="lang-btn" data-lang-btn="en">EN</button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- ============================================================
+         HERO
+    ============================================================= -->
+    <section class="hero" id="pocetna">
+      <div class="hero-media" aria-hidden="true">
+        <img
+          class="hero-bg"
+          data-config-img="hero"
+          src=""
+          alt=""
+          loading="eager"
+          fetchpriority="high"
+        />
+        <div class="hero-overlay"></div>
+      </div>
+
+      <div class="hero-content">
+        <p class="hero-eyebrow reveal-hero" style="--d:0" data-i18n="heroEyebrow">Beograd</p>
+        <h1 class="hero-title">
+          <span class="hero-title-line reveal-hero" style="--d:1" data-config="brand-name">THE BEAST</span>
+          <span class="hero-title-sub reveal-hero" style="--d:2" data-config="brand-subtitle">TATTOO STUDIO</span>
+        </h1>
+        <p class="hero-tagline reveal-hero" style="--d:3" data-config="tagline">
+          Umetnost koja postaje deo tebe.
+        </p>
+
+        <div class="hero-actions reveal-hero" style="--d:4">
+          <a href="#kontakt" class="btn btn-primary" data-i18n="ctaBook">Zakaži termin</a>
+          <a href="#radovi" class="btn btn-ghost" data-i18n="ctaGallery">Pogledaj radove</a>
+        </div>
+      </div>
+
+      <button class="scroll-hint" data-i18n-aria-label="scrollHintAria" aria-label="Skroluj do sadržaja">
+        <span class="scroll-hint-line"></span>
+      </button>
+    </section>
+
+    <!-- ============================================================
+         USLUGE
+    ============================================================= -->
+    <section class="section services" id="usluge">
+      <div class="container">
+        <div class="section-heading reveal">
+          <h2 data-i18n="servicesHeading">Usluge</h2>
+          <p class="section-sub" data-i18n="servicesSub">
+            Od custom detalja do fine line detalja
+          </p>
+        </div>
+
+        <div class="services-grid" data-config="services"></div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         O SALONU
+    ============================================================= -->
+    <section class="section about" id="o-salonu">
+      <div class="container about-grid">
+        <div class="about-media reveal">
+          <img
+            data-config-img="about"
+            src=""
+            alt="Enterijer tattoo studija The Beast tokom rada"
+            loading="lazy"
+          />
+          <div class="about-media-placeholder-label" data-i18n-html="aboutPlaceholder">
+            Ovde ide slika enterijera<br />studija
+          </div>
+        </div>
+
+        <div class="about-content">
+          <h2 class="reveal" data-i18n="aboutHeading">O salonu</h2>
+          <p class="reveal" data-i18n="aboutParagraph1">
+            The Beast nije mesto gde se tetovaže samo rade — ovde se prave
+            odluke koje ostaju zauvek. Naš tim okuplja umetnike posvećene
+            zanatu, preciznosti i poštovanju svakog detalja procesa, od prve
+            skice do poslednjeg poteza igle.
+          </p>
+          <p class="reveal" data-i18n="aboutParagraph2">
+            Radimo isključivo po najvišim standardima higijene i sterilizacije,
+            uz individualni pristup svakom klijentu — jer svaka priča koju
+            nosiš na koži zaslužuje punu pažnju. Kreativnost kod nas nije
+            slučajnost, već rezultat iskustva, discipline i istinske
+            posvećenosti kvalitetu.
+          </p>
+
+          <div class="stats" data-config="stats"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         GALERIJA / RADOVI
+    ============================================================= -->
+    <section class="section gallery-section" id="radovi">
+      <div class="container">
+        <div class="section-heading reveal">
+          <h2 data-i18n="galleryHeading">Naši radovi</h2>
+          <p class="section-sub" data-i18n="gallerySub">
+            Pogledajte naše radove i uverite se u preciznost i posvećenost
+            svakom detalju.
+          </p>
+        </div>
+
+        <div class="gallery-grid" data-config="gallery"></div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         TESTIMONIJALI
+    ============================================================= -->
+    <section class="section testimonials" id="utisci">
+      <div class="container">
+        <div class="section-heading reveal">
+          <h2 data-i18n="testimonialsHeading">Utisci klijenata</h2>
+          <p class="section-sub" data-i18n="testimonialsSub">
+            Iskustva naših klijenata govore više od bilo koje reklame.
+          </p>
+        </div>
+
+        <div class="testimonials-marquee">
+          <div class="testimonials-track" data-config="testimonials"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         KONTAKT
+    ============================================================= -->
+    <section class="section contact" id="kontakt">
+      <div class="container contact-grid">
+        <div class="contact-info">
+          <h2 class="reveal" data-i18n="contactHeading">Zakaži svoj termin</h2>
+          <p class="reveal contact-lead" data-config="brand-name">THE BEAST</p>
+          <p class="reveal contact-sub" data-i18n="studioLabel">Tattoo Studio</p>
+
+          <ul class="contact-details reveal">
+            <li>
+              <span class="contact-label" data-i18n="labelPhone">Telefon</span>
+              <a data-config-href="phone" data-config="phone" href="#">+381 XX XXX XXXX</a>
+            </li>
+            <li>
+              <span class="contact-label" data-i18n="labelInstagram">Instagram</span>
+              <a data-config-href="instagram" data-config="instagram" href="#" target="_blank" rel="noopener">@thebeasttattoo</a>
+            </li>
+            <li>
+              <span class="contact-label" data-i18n="labelAddress">Adresa</span>
+              <span data-config="address">[ADRESA STUDIJA]</span>
+            </li>
+          </ul>
+
+          <ul class="hours-list reveal" data-config="hours"></ul>
+
+          <a data-config-href="instagram" data-config="instagram" href="#" target="_blank" rel="noopener" class="btn btn-primary reveal" data-i18n="ctaBook">Zakaži termin</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         MAPA
+    ============================================================= -->
+    <section class="section map-section" id="lokacija">
+      <div class="container map-grid">
+        <div class="map-frame reveal">
+          <iframe
+            data-config-src="map"
+            src=""
+            data-i18n-title="mapTitle"
+            title="Lokacija studija The Beast na Google mapi"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================= -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <img class="footer-logo" src="/images/logo.png" alt="" />
+        <span class="footer-name" data-config="brand-name">THE BEAST</span>
+        <span class="footer-sub" data-i18n="studioLabel">Tattoo Studio</span>
+      </div>
+
+      <nav class="footer-nav" data-i18n-aria-label="footerNavAria" aria-label="Footer navigacija">
+        <ul data-config="nav"></ul>
+      </nav>
+
+      <div class="footer-contact">
+        <a data-config-href="instagram" data-config="instagram" href="#" target="_blank" rel="noopener">@thebeasttattoo</a>
+        <span data-config="address">[ADRESA STUDIJA]</span>
+        <a data-config-href="phone" data-config="phone" href="#">+381 XX XXX XXXX</a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; <span data-config="year">2026</span> The Beast Tattoo Studio. <span data-i18n="rightsReserved">All rights reserved.</span></p>
+    </div>
+  </footer>
+
+  <!-- ============================================================
+       LIGHTBOX (galerija radova)
+  ============================================================= -->
+  <div class="lightbox" aria-hidden="true" role="dialog" aria-modal="true" data-i18n-aria-label="lightboxDialogAria" aria-label="Uvećani prikaz rada">
+    <div class="lightbox-backdrop"></div>
+    <div class="lightbox-content">
+      <button class="lightbox-close" data-i18n-aria-label="lightboxCloseAria" aria-label="Zatvori prikaz">&times;</button>
+      <button class="lightbox-prev" data-i18n-aria-label="lightboxPrevAria" aria-label="Prethodna slika">&#8249;</button>
+      <img class="lightbox-image" src="" alt="" />
+      <button class="lightbox-next" data-i18n-aria-label="lightboxNextAria" aria-label="Sledeća slika">&#8250;</button>
+      <div class="lightbox-meta">
+        <p class="lightbox-caption"></p>
+        <span class="lightbox-counter"></span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+/* ==========================================================================
+   THE BEAST — TATTOO STUDIO
+   script.js
+
+   Sadržaj ovog fajla:
+   1. SITE_CONFIG        -> SVE podatke o studiju menjaš SAMO ovde
+   2. Render funkcije     -> ubacuju SITE_CONFIG u HTML (data-config atributi)
+   3. Navigacija          -> sticky/blur navbar, hamburger meni, smooth scroll
+   4. Scroll reveal       -> IntersectionObserver animacije pri skrolovanju
+   5. Hero parallax       -> suptilan parallax + scroll indikator
+   6. Galerija + Lightbox -> otvaranje slika, prev/next, Escape, klik van slike
+   7. Kontakt forma       -> validacija na frontendu (bez lažnog slanja)
+   ========================================================================== */
+
+/* ==========================================================================
+   1. SITE_CONFIG — CENTRALNA KONFIGURACIJA
+   --------------------------------------------------------------------------
+   Ovo je JEDINO mesto gde treba menjati podatke o studiju (telefon,
+   Instagram, adresa, radno vreme, statistike, usluge, slike, mapa...).
+   Sve ostalo u HTML-u i CSS-u se automatski oslanja na ove vrednosti.
+   ========================================================================== */
+
+const SITE_CONFIG = {
+  // Osnovni identitet
+  brandName: "THE BEAST",
+  brandSubtitle: "TATTOO STUDIO",
+  tagline: {
+    sr: "Umetnost koja postaje deo tebe.",
+    en: "Art that becomes part of you.",
+  },
+
+  // Kontakt podaci — promeni ovde, menja se svuda na sajtu
+  phone: "063423414",
+  phoneHref: "+38163423414", // format za tel: link, bez razmaka
+  instagramHandle: "@mladentattoo",
+  instagramUrl: "https://instagram.com/mladentattoo",
+  email: "info@thebeasttattoo.rs",
+  address: "Nemanjina 40, Beograd",
+
+  // Radno vreme (svaki red je jedan string)
+  workingHours: [
+    { day: { sr: "Pon – Pet", en: "Mon – Fri" }, time: "10:00 – 20:00" },
+    { day: { sr: "Subota", en: "Saturday" }, time: "10:00 – 18:00" },
+    { day: { sr: "Nedelja", en: "Sunday" }, time: { sr: "Zatvoreno", en: "Closed" } },
+  ],
+
+  // Google mapa — zameni link kada budeš imao tačnu lokaciju studija.
+  // Najlakši način: Google Maps -> Share -> Embed a map -> kopiraj "src" iz iframe-a.
+  mapEmbedUrl: "https://www.google.com/maps?q=44.8025261,20.4650162&output=embed",
+
+  // Statistike u "O salonu" sekciji — lako izmenljivo
+  stats: [
+    { number: "1000+", label: { sr: "Tattoo radova", en: "Tattoos done" } },
+    { number: "5+", label: { sr: "Godina iskustva", en: "Years of experience" } },
+    { number: "100%", label: { sr: "Posvećenost detaljima", en: "Attention to detail" } },
+  ],
+
+  // Usluge
+  services: [
+    {
+      index: "01",
+      title: { sr: "Custom Tattoo", en: "Custom Tattoo" },
+      description: {
+        sr: "Dizajn kreiran isključivo za tebe — od prve skice do finalnog rada, prilagođen tvojoj priči i telu.",
+        en: "A design created exclusively for you — from the first sketch to the final piece, tailored to your story and body.",
+      },
+    },
+    {
+      index: "02",
+      title: { sr: "Black & Grey", en: "Black & Grey" },
+      description: {
+        sr: "Dubina sivih tonova i meki prelazi za vanvremenski, sofisticiran izgled koji stari sa stilom.",
+        en: "Depth of grey tones and soft transitions for a timeless, sophisticated look that ages with style.",
+      },
+    },
+    {
+      index: "03",
+      title: { sr: "Realism", en: "Realism" },
+      description: {
+        sr: "Portreti, životinje i motivi koji na koži izgledaju gotovo fotografski — preciznost je naš standard.",
+        en: "Portraits, animals and motifs that look almost photographic on skin — precision is our standard.",
+      },
+    },
+    {
+      index: "04",
+      title: { sr: "Fine Line", en: "Fine Line" },
+      description: {
+        sr: "Tanke, čiste linije za suptilan i minimalistički izraz, idealno za prvu ili diskretnu tetovažu.",
+        en: "Thin, clean lines for a subtle, minimalist expression — ideal for a first or discreet tattoo.",
+      },
+    },
+    {
+      index: "05",
+      title: { sr: "Cover Up", en: "Cover Up" },
+      description: {
+        sr: "Staru tetovažu pretvaramo u novo umetničko delo — pažljiva analiza i dizajn koji potpuno menja priču.",
+        en: "We turn an old tattoo into a new work of art — careful analysis and a design that completely changes the story.",
+      },
+    },
+    {
+      index: "06",
+      title: { sr: "Tattoo Consultation", en: "Tattoo Consultation" },
+      description: {
+        sr: "Razgovor pre rada — dizajn, pozicioniranje, veličina i nega, kako bi svaka odluka bila sigurna.",
+        en: "A conversation before the session — design, placement, size and aftercare, so every decision feels right.",
+      },
+    },
+  ],
+
+  // Slike — SVI URL-ovi su ovde, na jednom mestu, radi lakše zamene.
+  // Hero i "O salonu" slika:
+  images: {
+    hero:
+      "/images/hero.png",
+    about: "/images/about.png", // <-- ubaci URL svoje slike enterijera ovde kada je imaš
+  },
+
+  // Galerija radova — dodaj/ukloni/zameni stavke po potrebi
+  gallery: [
+    {
+      url: "/images/gallery-1.jpg",
+      alt: {
+        sr: "Tetovaža glave leoparda u boji na podlaktici",
+        en: "Color leopard head tattoo on the forearm",
+      },
+    },
+    {
+      url: "/images/gallery-2.jpg",
+      alt: {
+        sr: "Portret lavice sa lavićem i afričkim pejzažom",
+        en: "Lioness portrait with a cub and African landscape",
+      },
+    },
+    {
+      url: "/images/gallery-3.jpg",
+      alt: {
+        sr: "Portret lava u kombinaciji sa motivom sata",
+        en: "Lion portrait combined with a clock motif",
+      },
+    },
+    {
+      url: "/images/gallery-4.jpg",
+      alt: {
+        sr: "Tetovaža natpisa na ćirilici na podlaktici",
+        en: "Cyrillic script lettering tattoo on the forearm",
+      },
+    },
+    {
+      url: "/images/gallery-5.jpg",
+      alt: {
+        sr: "Kaligrafski ispisano prezime na podlaktici",
+        en: "Calligraphic surname lettering tattoo on the forearm",
+      },
+    },
+    {
+      url: "/images/gallery-6.jpg",
+      alt: {
+        sr: "Tetovaža tigrove glave preko celih leđa",
+        en: "Tiger head tattoo covering the entire back",
+      },
+    },
+    {
+      url: "/images/gallery-7.jpg",
+      alt: {
+        sr: "Tetovaža avionom, mapom i palmama na nozi",
+        en: "Airplane, map and palm tree tattoo on the leg",
+      },
+    },
+    {
+      url: "/images/gallery-8.jpg",
+      alt: {
+        sr: "Crtana tetovaža dva psa u boji",
+        en: "Colorful cartoon tattoo of two dogs",
+      },
+    },
+  ],
+
+  // Utisci klijenata — dodaj/ukloni/zameni stavke po potrebi
+  testimonials: [
+    {
+      text: {
+        sr: "Pristup je bio profesionalan od prve konsultacije do poslednjeg poteza igle. Rezultat je premašio očekivanja.",
+        en: "The approach was professional from the first consultation to the final touch of the needle. The result exceeded expectations.",
+      },
+      name: "Marko J.",
+      stars: "★★★★★",
+    },
+    {
+      text: {
+        sr: "Higijena i preciznost na najvišem nivou. Osećala sam se sigurno tokom celog procesa, a dizajn je ispao savršeno.",
+        en: "Hygiene and precision at the highest level. I felt safe throughout the whole process, and the design turned out perfect.",
+      },
+      name: "Ana P.",
+      stars: "★★★★★",
+    },
+    {
+      text: {
+        sr: "Realizam koji su uradili izgleda gotovo fotografski. Definitivno se vraćam za sledeću tetovažu.",
+        en: "The realism they did looks almost photographic. I'm definitely coming back for my next tattoo.",
+      },
+      name: "Nikola S.",
+      stars: "★★★★★",
+    },
+    {
+      text: {
+        sr: "Fine line rad je neverovatno čist i tanak, tačno onako kako sam zamislila. Umetnik je strpljivo saslušao svaku sitnicu.",
+        en: "The fine line work is incredibly clean and delicate, exactly as I imagined it. The artist patiently listened to every little detail.",
+      },
+      name: "Jelena M.",
+      stars: "★★★★★",
+    },
+    {
+      text: {
+        sr: "Prvi put sam radio tetovažu i strah je nestao već posle par minuta. Atmosfera u studiju je opuštajuća i prijateljska.",
+        en: "It was my first tattoo and the fear disappeared after just a few minutes. The studio has a relaxing, friendly atmosphere.",
+      },
+      name: "Stefan R.",
+      stars: "★★★★★",
+    },
+    {
+      text: {
+        sr: "Custom dizajn su napravili potpuno od nule na osnovu moje ideje. Nekoliko izmena i dobili smo tačno ono što sam želela.",
+        en: "They created a custom design completely from scratch based on my idea. A few revisions later, we had exactly what I wanted.",
+      },
+      name: "Milica T.",
+      stars: "★★★★★",
+    },
+    {
+      text: {
+        sr: "Black & grey rad na podlaktici je pun detalja i senčenja koje deluje trodimenzionalno. Svaka preporuka je zaslužena.",
+        en: "The black & grey work on my forearm is full of detail and shading that looks three-dimensional. Every recommendation is well deserved.",
+      },
+      name: "Uroš D.",
+      stars: "★★★★★",
+    },
+    {
+      text: {
+        sr: "Zakazivanje termina je bilo brzo i jednostavno, a umetnik je tačno ispoštovao dogovoreno vreme. Retko se to danas viđa.",
+        en: "Booking an appointment was quick and simple, and the artist was right on time. That's rare to see these days.",
+      },
+      name: "Ivana K.",
+      stars: "★★★★★",
+    },
+    {
+      text: {
+        sr: "Cena je potpuno opravdana kvalitetom rada i materijala koji koriste. Ne štede na iglama ni na bojama.",
+        en: "The price is fully justified by the quality of the work and materials they use. They don't cut corners on needles or ink.",
+      },
+      name: "Filip N.",
+      stars: "★★★★★",
+    },
+    {
+      text: {
+        sr: "Zarastanje je proteklo bez ikakvih problema zahvaljujući jasnim uputstvima za negu koje smo dobili posle seanse.",
+        en: "Healing went smoothly thanks to the clear aftercare instructions we received after the session.",
+      },
+      name: "Tamara V.",
+      stars: "★★★★★",
+    },
+  ],
+
+  // Navigacija
+  nav: [
+    { label: { sr: "Početna", en: "Home" }, href: "#pocetna" },
+    { label: { sr: "Usluge", en: "Services" }, href: "#usluge" },
+    { label: { sr: "O salonu", en: "About" }, href: "#o-salonu" },
+    { label: { sr: "Radovi", en: "Work" }, href: "#radovi" },
+    { label: { sr: "Kontakt", en: "Contact" }, href: "#kontakt" },
+  ],
+
+  year: new Date().getFullYear(),
+};
+
+/* ==========================================================================
+   1.5 PREVODI — statični tekstovi obeleženi data-i18n atributima
+   ========================================================================== */
+
+const TRANSLATIONS = {
+  brandHomeAria: {
+    sr: "The Beast Tattoo Studio — početna",
+    en: "The Beast Tattoo Studio — home",
+  },
+  mainNavAria: { sr: "Glavna navigacija", en: "Main navigation" },
+  mobileNavAria: { sr: "Mobilna navigacija", en: "Mobile navigation" },
+  footerNavAria: { sr: "Footer navigacija", en: "Footer navigation" },
+  openMenuAria: { sr: "Otvori meni", en: "Open menu" },
+  scrollHintAria: { sr: "Skroluj do sadržaja", en: "Scroll to content" },
+  ctaBook: { sr: "Zakaži termin", en: "Book an appointment" },
+  ctaGallery: { sr: "Pogledaj radove", en: "See our work" },
+  heroEyebrow: { sr: "Beograd", en: "Belgrade" },
+  servicesHeading: { sr: "Usluge", en: "Services" },
+  servicesSub: {
+    sr: "Od custom detalja do fine line detalja",
+    en: "From custom detail to fine line detail",
+  },
+  aboutHeading: { sr: "O salonu", en: "About the studio" },
+  aboutParagraph1: {
+    sr: "The Beast nije mesto gde se tetovaže samo rade — ovde se prave odluke koje ostaju zauvek. Naš tim okuplja umetnike posvećene zanatu, preciznosti i poštovanju svakog detalja procesa, od prve skice do poslednjeg poteza igle.",
+    en: "The Beast isn't just a place where tattoos are made — it's where decisions are made that last forever. Our team brings together artists devoted to craft, precision and respect for every detail of the process, from the first sketch to the final touch of the needle.",
+  },
+  aboutParagraph2: {
+    sr: "Radimo isključivo po najvišim standardima higijene i sterilizacije, uz individualni pristup svakom klijentu — jer svaka priča koju nosiš na koži zaslužuje punu pažnju. Kreativnost kod nas nije slučajnost, već rezultat iskustva, discipline i istinske posvećenosti kvalitetu.",
+    en: "We work exclusively to the highest standards of hygiene and sterilization, with an individual approach to every client — because every story you carry on your skin deserves full attention. Creativity here is never accidental — it's the result of experience, discipline and genuine dedication to quality.",
+  },
+  aboutPlaceholder: {
+    sr: "Ovde ide slika enterijera<br />studija",
+    en: "Studio interior photo<br />goes here",
+  },
+  galleryHeading: { sr: "Naši radovi", en: "Our work" },
+  gallerySub: {
+    sr: "Pogledajte naše radove i uverite se u preciznost i posvećenost svakom detalju.",
+    en: "Take a look at our work and see the precision and dedication to every detail.",
+  },
+  testimonialsHeading: { sr: "Utisci klijenata", en: "Client testimonials" },
+  testimonialsSub: {
+    sr: "Iskustva naših klijenata govore više od bilo koje reklame.",
+    en: "Our clients' experiences speak louder than any advertisement.",
+  },
+  contactHeading: { sr: "Zakaži svoj termin", en: "Book your appointment" },
+  studioLabel: { sr: "Tattoo Studio", en: "Tattoo Studio" },
+  labelPhone: { sr: "Telefon", en: "Phone" },
+  labelInstagram: { sr: "Instagram", en: "Instagram" },
+  labelAddress: { sr: "Adresa", en: "Address" },
+  mapTitle: {
+    sr: "Lokacija studija The Beast na Google mapi",
+    en: "The Beast studio location on Google Maps",
+  },
+  rightsReserved: { sr: "Sva prava zadržana.", en: "All rights reserved." },
+  lightboxDialogAria: { sr: "Uvećani prikaz rada", en: "Enlarged view of the work" },
+  lightboxCloseAria: { sr: "Zatvori prikaz", en: "Close view" },
+  lightboxPrevAria: { sr: "Prethodna slika", en: "Previous image" },
+  lightboxNextAria: { sr: "Sledeća slika", en: "Next image" },
+};
+
+let currentLang = localStorage.getItem("siteLang") || "sr";
+
+function pick(value) {
+  if (value && typeof value === "object" && (value.sr || value.en)) {
+    return value[currentLang] || value.sr || value.en || "";
+  }
+  return value;
+}
+
+function applyTranslations() {
+  document.documentElement.setAttribute("lang", currentLang);
+
+  Object.entries(TRANSLATIONS).forEach(([key, value]) => {
+    const text = value[currentLang] || value.sr;
+    document
+      .querySelectorAll(`[data-i18n="${key}"]`)
+      .forEach((el) => (el.textContent = text));
+    document
+      .querySelectorAll(`[data-i18n-html="${key}"]`)
+      .forEach((el) => (el.innerHTML = text));
+    document
+      .querySelectorAll(`[data-i18n-aria-label="${key}"]`)
+      .forEach((el) => el.setAttribute("aria-label", text));
+    document
+      .querySelectorAll(`[data-i18n-title="${key}"]`)
+      .forEach((el) => el.setAttribute("title", text));
+  });
+
+  document.querySelectorAll(".lang-btn").forEach((btn) => {
+    btn.classList.toggle(
+      "is-active",
+      btn.getAttribute("data-lang-btn") === currentLang
+    );
+  });
+}
+
+function setLanguage(lang) {
+  if (lang !== "sr" && lang !== "en") return;
+  currentLang = lang;
+  localStorage.setItem("siteLang", lang);
+  applyTranslations();
+  renderConfig();
+  refreshScrollReveal();
+}
+
+function initLanguageSwitch() {
+  document.querySelectorAll(".lang-btn").forEach((btn) => {
+    btn.addEventListener("click", () => setLanguage(btn.getAttribute("data-lang-btn")));
+  });
+  applyTranslations();
+}
+
+/* ==========================================================================
+   2. RENDER — popunjavanje HTML-a na osnovu SITE_CONFIG
+   ========================================================================== */
+
+function renderConfig() {
+  // Tekstualna polja obeležena data-config atributom
+  const textMap = {
+    "brand-name": SITE_CONFIG.brandName,
+    "brand-subtitle": SITE_CONFIG.brandSubtitle,
+    tagline: pick(SITE_CONFIG.tagline),
+    phone: SITE_CONFIG.phone,
+    instagram: SITE_CONFIG.instagramHandle,
+    address: SITE_CONFIG.address,
+    email: SITE_CONFIG.email,
+    year: SITE_CONFIG.year,
+  };
+
+  Object.entries(textMap).forEach(([key, value]) => {
+    document.querySelectorAll(`[data-config="${key}"]`).forEach((el) => {
+      el.textContent = value;
+    });
+  });
+
+  // Linkovi (tel / instagram / email)
+  document
+    .querySelectorAll('[data-config-href="phone"]')
+    .forEach((el) => (el.href = `tel:${SITE_CONFIG.phoneHref}`));
+  document
+    .querySelectorAll('[data-config-href="instagram"]')
+    .forEach((el) => (el.href = SITE_CONFIG.instagramUrl));
+  document
+    .querySelectorAll('[data-config-href="email"]')
+    .forEach((el) => (el.href = `mailto:${SITE_CONFIG.email}`));
+
+  // Radno vreme
+  const hoursList = document.querySelector('[data-config="hours"]');
+  if (hoursList) {
+    hoursList.innerHTML = SITE_CONFIG.workingHours
+      .map(
+        (row) =>
+          `<li><span class="hours-day">${pick(row.day)}</span><span class="hours-time">${pick(row.time)}</span></li>`
+      )
+      .join("");
+  }
+
+  // Statistike
+  const statsWrap = document.querySelector('[data-config="stats"]');
+  if (statsWrap) {
+    statsWrap.innerHTML = SITE_CONFIG.stats
+      .map((s) => {
+        const match = String(s.number).match(/^(\d+(?:[.,]\d+)?)(.*)$/);
+        const suffix = match ? match[2] : "";
+        return `
+        <div class="stat reveal">
+          <span class="stat-number" data-value="${s.number}">0${suffix}</span>
+          <span class="stat-label">${pick(s.label)}</span>
+        </div>`;
+      })
+      .join("");
+  }
+  initStatsCounters();
+
+  // Usluge
+  const servicesWrap = document.querySelector('[data-config="services"]');
+  if (servicesWrap) {
+    servicesWrap.innerHTML = SITE_CONFIG.services
+      .map(
+        (s) => `
+        <article class="service-card reveal">
+          <span class="service-index">${s.index}</span>
+          <h3 class="service-title">${pick(s.title)}</h3>
+          <p class="service-description">${pick(s.description)}</p>
+          <span class="service-line" aria-hidden="true"></span>
+        </article>`
+      )
+      .join("");
+  }
+
+  // Hero i about slike
+  const heroImg = document.querySelector('[data-config-img="hero"]');
+  if (heroImg) heroImg.src = SITE_CONFIG.images.hero;
+
+  const aboutImg = document.querySelector('[data-config-img="about"]');
+  if (aboutImg) {
+    const aboutMedia = aboutImg.closest(".about-media");
+    if (SITE_CONFIG.images.about) {
+      aboutImg.src = SITE_CONFIG.images.about;
+      aboutMedia?.classList.remove("is-placeholder");
+    } else {
+      aboutMedia?.classList.add("is-placeholder");
+    }
+  }
+
+  // Galerija
+  const galleryWrap = document.querySelector('[data-config="gallery"]');
+  if (galleryWrap) {
+    const openLabel = currentLang === "en" ? "Open enlarged view: " : "Otvori uvećani prikaz: ";
+    galleryWrap.innerHTML = SITE_CONFIG.gallery
+      .map(
+        (item, i) => `
+        <button type="button" class="gallery-item reveal" data-index="${i}" aria-label="${openLabel}${pick(item.alt)}">
+          <img src="${item.url}" alt="${pick(item.alt)}" loading="lazy" />
+          <span class="gallery-overlay" aria-hidden="true">
+            <span class="gallery-plus"></span>
+          </span>
+        </button>`
+      )
+      .join("");
+  }
+
+  // Mapa
+  const mapFrame = document.querySelector('[data-config-src="map"]');
+  if (mapFrame) mapFrame.src = SITE_CONFIG.mapEmbedUrl;
+
+  // Testimonijali (lista se duplira radi neprekidne marquee animacije)
+  const testimonialsWrap = document.querySelector('[data-config="testimonials"]');
+  if (testimonialsWrap) {
+    const cardHTML = (t, hidden) => `
+        <article class="testimonial-card"${hidden ? ' aria-hidden="true"' : ""}>
+          <span class="testimonial-quote-mark" aria-hidden="true">"</span>
+          <p class="testimonial-text">${pick(t.text)}</p>
+          <div class="testimonial-footer">
+            <span class="testimonial-name">${t.name}</span>
+            <span class="testimonial-stars" aria-hidden="true">${t.stars}</span>
+          </div>
+        </article>`;
+    const items = SITE_CONFIG.testimonials;
+    // Duplirano dva puta da traka bude neprekidna (translateX ide do -50%)
+    testimonialsWrap.innerHTML =
+      items.map((t) => cardHTML(t, false)).join("") +
+      items.map((t) => cardHTML(t, true)).join("");
+  }
+
+  // Navigacija (desktop + mobile dele istu strukturu)
+  document.querySelectorAll('[data-config="nav"]').forEach((navEl) => {
+    navEl.innerHTML = SITE_CONFIG.nav
+      .map(
+        (item) =>
+          `<li><a href="${item.href}" class="nav-link"><span>${pick(item.label)}</span></a></li>`
+      )
+      .join("");
+  });
+}
+
+/* ==========================================================================
+   3. NAVIGACIJA — sticky navbar, hamburger meni, smooth scroll, active link
+   ========================================================================== */
+
+function initNavbar() {
+  const header = document.querySelector(".site-header");
+  const hamburger = document.querySelector(".hamburger");
+  const mobileMenu = document.querySelector(".mobile-menu");
+
+  // Sticky/blur pozadina pri skrolovanju
+  const onScroll = () => {
+    if (window.scrollY > 40) {
+      header.classList.add("is-scrolled");
+    } else {
+      header.classList.remove("is-scrolled");
+    }
+  };
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+
+  // Hamburger meni
+  const closeMobileMenu = () => {
+    hamburger.classList.remove("is-open");
+    mobileMenu.classList.remove("is-open");
+    hamburger.setAttribute("aria-expanded", "false");
+    document.body.classList.remove("menu-open");
+  };
+
+  const openMobileMenu = () => {
+    hamburger.classList.add("is-open");
+    mobileMenu.classList.add("is-open");
+    hamburger.setAttribute("aria-expanded", "true");
+    document.body.classList.add("menu-open");
+  };
+
+  hamburger.addEventListener("click", () => {
+    const isOpen = hamburger.classList.contains("is-open");
+    isOpen ? closeMobileMenu() : openMobileMenu();
+  });
+
+  // Smooth scroll do sekcija (delegacija — radi i posle ponovnog renderovanja
+  // navigacije prilikom promene jezika)
+  document.addEventListener("click", (e) => {
+    const link = e.target.closest('.nav-link[href^="#"]');
+    if (!link) return;
+    const targetId = link.getAttribute("href");
+    const target = document.querySelector(targetId);
+    if (!target) return;
+    e.preventDefault();
+    const headerHeight = header.offsetHeight;
+    const top =
+      target.getBoundingClientRect().top + window.scrollY - headerHeight + 1;
+    window.scrollTo({ top, behavior: "smooth" });
+    history.pushState(null, "", targetId);
+    if (mobileMenu.classList.contains("is-open")) closeMobileMenu();
+  });
+
+  // Aktivan link prilikom skrolovanja kroz sekcije
+  const sections = document.querySelectorAll("main section[id]");
+
+  const sectionObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          document
+            .querySelectorAll(".nav-link.is-active")
+            .forEach((l) => l.classList.remove("is-active"));
+          document
+            .querySelectorAll(`.nav-link[href="#${entry.target.id}"]`)
+            .forEach((l) => l.classList.add("is-active"));
+        }
+      });
+    },
+    { rootMargin: "-45% 0px -50% 0px", threshold: 0 }
+  );
+  sections.forEach((section) => sectionObserver.observe(section));
+}
+
+/* ==========================================================================
+   3.5 STAT BROJAČI — brojanje od 0 do finalne vrednosti pri ulasku u view
+   ========================================================================== */
+
+let statsCounterObserver = null;
+
+function animateStatNumber(el) {
+  const raw = el.getAttribute("data-value") || el.textContent;
+  const match = raw.match(/^(\d+(?:[.,]\d+)?)(.*)$/);
+  if (!match) return;
+
+  const target = parseFloat(match[1].replace(",", "."));
+  const suffix = match[2] || "";
+  const isInt = Number.isInteger(target);
+  const duration = 1600;
+  const start = performance.now();
+
+  function tick(now) {
+    const progress = Math.min((now - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+    const current = target * eased;
+    el.textContent =
+      (isInt ? Math.round(current) : current.toFixed(1).replace(".", ",")) +
+      suffix;
+
+    if (progress < 1) {
+      requestAnimationFrame(tick);
+    } else {
+      el.textContent = raw;
+    }
+  }
+
+  requestAnimationFrame(tick);
+}
+
+function initStatsCounters() {
+  const reducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+  const elements = document.querySelectorAll(
+    ".stat-number[data-value]:not([data-counted])"
+  );
+
+  if (reducedMotion) {
+    elements.forEach((el) => {
+      el.textContent = el.getAttribute("data-value");
+      el.setAttribute("data-counted", "true");
+    });
+    return;
+  }
+
+  if (!statsCounterObserver) {
+    statsCounterObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.setAttribute("data-counted", "true");
+            animateStatNumber(entry.target);
+            statsCounterObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.4 }
+    );
+  }
+
+  elements.forEach((el) => statsCounterObserver.observe(el));
+}
+
+/* ==========================================================================
+   4. SCROLL REVEAL — fade-in / slide-in animacije pri skrolovanju
+   ========================================================================== */
+
+let scrollRevealObserver = null;
+let scrollRevealReducedMotion = false;
+
+function initScrollReveal() {
+  scrollRevealReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+
+  if (scrollRevealReducedMotion) {
+    document.querySelectorAll(".reveal").forEach((el) => el.classList.add("in-view"));
+    return;
+  }
+
+  scrollRevealObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          // Blagi stagger unutar iste grupe (kartice, statistike, galerija)
+          const siblings = Array.from(
+            entry.target.parentElement.children
+          ).filter((el) => el.classList.contains("reveal"));
+          const indexInGroup = siblings.indexOf(entry.target);
+          entry.target.style.transitionDelay = `${Math.min(indexInGroup * 80, 400)}ms`;
+          entry.target.classList.add("in-view");
+          scrollRevealObserver.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.12, rootMargin: "0px 0px -60px 0px" }
+  );
+
+  refreshScrollReveal();
+}
+
+// Poziva se ponovo nakon što se dinamički sadržaj ponovo iscrta (npr. promena
+// jezika), kako bi se novi ".reveal" elementi pratili/prikazali.
+function refreshScrollReveal() {
+  const revealElements = document.querySelectorAll(".reveal:not(.in-view)");
+  if (scrollRevealReducedMotion) {
+    revealElements.forEach((el) => el.classList.add("in-view"));
+    return;
+  }
+  if (!scrollRevealObserver) return;
+  revealElements.forEach((el) => scrollRevealObserver.observe(el));
+}
+
+/* ==========================================================================
+   5. HERO — parallax + scroll indikator
+   ========================================================================== */
+
+function initHero() {
+  const heroBg = document.querySelector(".hero-bg");
+  const scrollHint = document.querySelector(".scroll-hint");
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+
+  if (heroBg && !prefersReducedMotion) {
+    let ticking = false;
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (!ticking) {
+          window.requestAnimationFrame(() => {
+            const offset = window.scrollY;
+            // Suptilan parallax, samo unutar visine hero sekcije
+            if (offset < window.innerHeight) {
+              heroBg.style.transform = `translate3d(0, ${offset * 0.25}px, 0) scale(1.08)`;
+            }
+            ticking = false;
+          });
+          ticking = true;
+        }
+      },
+      { passive: true }
+    );
+  }
+
+  if (scrollHint) {
+    scrollHint.addEventListener("click", () => {
+      const nextSection = document.querySelector("#usluge");
+      nextSection?.scrollIntoView({ behavior: "smooth" });
+    });
+
+    window.addEventListener(
+      "scroll",
+      () => {
+        scrollHint.style.opacity = window.scrollY > 120 ? "0" : "1";
+      },
+      { passive: true }
+    );
+  }
+}
+
+/* ==========================================================================
+   6. GALERIJA + LIGHTBOX
+   ========================================================================== */
+
+function initLightbox() {
+  const lightbox = document.querySelector(".lightbox");
+  const lightboxImg = lightbox.querySelector(".lightbox-image");
+  const lightboxCaption = lightbox.querySelector(".lightbox-caption");
+  const btnClose = lightbox.querySelector(".lightbox-close");
+  const btnPrev = lightbox.querySelector(".lightbox-prev");
+  const btnNext = lightbox.querySelector(".lightbox-next");
+  const counter = lightbox.querySelector(".lightbox-counter");
+
+  let currentIndex = 0;
+  let lastFocusedElement = null;
+
+  const items = SITE_CONFIG.gallery;
+
+  function updateLightbox() {
+    const item = items[currentIndex];
+    lightboxImg.src = item.url;
+    lightboxImg.alt = pick(item.alt);
+    lightboxCaption.textContent = pick(item.alt);
+    counter.textContent = `${currentIndex + 1} / ${items.length}`;
+  }
+
+  function openLightbox(index) {
+    currentIndex = index;
+    lastFocusedElement = document.activeElement;
+    updateLightbox();
+    lightbox.classList.add("is-open");
+    lightbox.setAttribute("aria-hidden", "false");
+    document.body.classList.add("menu-open"); // reuse no-scroll lock
+    btnClose.focus();
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove("is-open");
+    lightbox.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("menu-open");
+    lightboxImg.src = "";
+    lastFocusedElement?.focus();
+  }
+
+  function showNext() {
+    currentIndex = (currentIndex + 1) % items.length;
+    updateLightbox();
+  }
+
+  function showPrev() {
+    currentIndex = (currentIndex - 1 + items.length) % items.length;
+    updateLightbox();
+  }
+
+  // Delegacija klika na dinamički generisane galerijske stavke
+  document.querySelector('[data-config="gallery"]').addEventListener(
+    "click",
+    (e) => {
+      const btn = e.target.closest(".gallery-item");
+      if (!btn) return;
+      openLightbox(Number(btn.dataset.index));
+    }
+  );
+
+  btnClose.addEventListener("click", closeLightbox);
+  btnNext.addEventListener("click", showNext);
+  btnPrev.addEventListener("click", showPrev);
+
+  // Klik van slike zatvara lightbox
+  lightbox.addEventListener("click", (e) => {
+    if (e.target === lightbox || e.target.classList.contains("lightbox-backdrop")) {
+      closeLightbox();
+    }
+  });
+
+  // Tastatura: Escape zatvara, strelice menjaju sliku
+  document.addEventListener("keydown", (e) => {
+    if (!lightbox.classList.contains("is-open")) return;
+    if (e.key === "Escape") closeLightbox();
+    if (e.key === "ArrowRight") showNext();
+    if (e.key === "ArrowLeft") showPrev();
+  });
+}
+
+/* ==========================================================================
+   INIT — pokretanje svega nakon učitavanja DOM-a
+   ========================================================================== */
+
+document.addEventListener("DOMContentLoaded", () => {
+  initLanguageSwitch();
+  renderConfig();
+  initNavbar();
+  initHero();
+  initLightbox();
+  initScrollReveal();
+
+  // Ukloni "no-js" klasu ako postoji (progressive enhancement hook)
+  document.documentElement.classList.remove("no-js");
+});
+
+  </script>
+</body>
+</html>
